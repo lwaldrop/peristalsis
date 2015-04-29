@@ -48,6 +48,17 @@ NCa = ceil(ceil(Nstraight/2)*Ca/Lt); % index of the center point
 Na1 = NCa - ceil(NLa/2);            % index of the starting point with respect to the elastic section
 Na2 = Na1+NLa-1;                    % index of the ending point with respect to the elastic section
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters for the prescribed peristalsis
+Lap = 0.3;                          % length of the actuator section
+NLap = ceil(Lap/ds);                  % number of points along each actuator
+Cap = 0.5*Lt;                       % center of the actuator section
+NCap = ceil(ceil(Nstraight/2)*Cap/Lt); % index of the center point
+Na1p = NCap - ceil(NLap/2);            % index of the starting point with respect to the elastic section
+Na2p = Na1p+NLap-1;                    % index of the ending point with respect to the elastic section
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % parameters for markers
@@ -102,29 +113,29 @@ fclose(vertex_fid);
 % actuator part
 % Write out the vertex information
 
-%top part
-vertex_fid = fopen(['actuator_top_' num2str(N) '.vertex'], 'w');
-fprintf(vertex_fid, '%d\n', NLa);
-
-for i=Na1:Na2,
-    ytop = centery-R2;
-    xtop = -Lt/2+i*ds;
-    plot(xtop,ytop,'k*')
-    fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
-end
-fclose(vertex_fid);
-
-%bottom part
-vertex_fid = fopen(['actuator_bot_' num2str(N) '.vertex'], 'w');
-fprintf(vertex_fid, '%d\n', NLa);
-
-for i=Na1:Na2,
-    ybot = centery-R1;
-    xbot = -Lt/2+i*ds;
-    plot(xbot,ybot,'k*')
-    fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
-end
-fclose(vertex_fid);
+% %top part
+% vertex_fid = fopen(['actuator_top_' num2str(N) '.vertex'], 'w');
+% fprintf(vertex_fid, '%d\n', NLa);
+% 
+% for i=Na1:Na2,
+%     ytop = centery-R2;
+%     xtop = -Lt/2+i*ds;
+%     plot(xtop,ytop,'k*')
+%     fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
+% end
+% fclose(vertex_fid);
+% 
+% %bottom part
+% vertex_fid = fopen(['actuator_bot_' num2str(N) '.vertex'], 'w');
+% fprintf(vertex_fid, '%d\n', NLa);
+% 
+% for i=Na1:Na2,
+%     ybot = centery-R1;
+%     xbot = -Lt/2+i*ds;
+%     plot(xbot,ybot,'k*')
+%     fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
+% end
+% fclose(vertex_fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -185,6 +196,32 @@ for i=0:Nmarkersx-1,
 end
 fclose(vertex_fid);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% prescribed peristalsis part
+% Write out the vertex information
+
+%top part
+vertex_fid = fopen(['pperi_top_' num2str(N) '.vertex'], 'w');
+fprintf(vertex_fid, '%d\n', NLap);
+
+for i=Na1p:Na2p,
+    ytop = centery-R2;
+    xtop = -Lt/2+i*ds;
+    fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
+end
+fclose(vertex_fid);
+
+%bottom part
+vertex_fid = fopen(['pperi_bot_' num2str(N) '.vertex'], 'w');
+fprintf(vertex_fid, '%d\n', NLap);
+
+for i=Na1p:Na2p,
+    ybot = centery-R1;
+    xbot = -Lt/2+i*ds;
+    fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
+end
+fclose(vertex_fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -302,24 +339,47 @@ fclose(target_fid);
 % Write out the target point information for the actuator
 
 %top actuator
-target_fid = fopen(['actuator_top_' num2str(N) '.target'], 'w');
-fprintf(target_fid, '%d\n', NLa);
+% target_fid = fopen(['actuator_top_' num2str(N) '.target'], 'w');
+% fprintf(target_fid, '%d\n', NLa);
+% 
+% for i = 0:NLa-1,
+%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+% end
+% 
+% fclose(target_fid);
+% 
+% %bottom actuator
+% target_fid = fopen(['actuator_bot_' num2str(N) '.target'], 'w');
+% fprintf(target_fid, '%d\n', NLa);
+% 
+% for i = 0:NLa-1,
+%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+% end
+% 
+% fclose(target_fid);
 
-for i = 0:NLa-1,
-    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-end
-
-fclose(target_fid);
-
-%bottom actuator
-target_fid = fopen(['actuator_bot_' num2str(N) '.target'], 'w');
-fprintf(target_fid, '%d\n', NLa);
-
-for i = 0:NLa-1,
-    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-end
-
-fclose(target_fid);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Write out the target point information for the actuator
+%
+%top prescribed peristalsis
+% target_fid = fopen(['pperi_top_' num2str(N) '.target'], 'w');
+% fprintf(target_fid, '%d\n', NLap);
+% 
+% for i = 0:NLap-1,
+%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+% end
+% 
+% fclose(target_fid);
+% 
+% %bottom prescribed peristalsis
+% target_fid = fopen(['pperi_bot_' num2str(N) '.target'], 'w');
+% fprintf(target_fid, '%d\n', NLap);
+% 
+% for i = 0:NLap-1,
+%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+% end
+% 
+% fclose(target_fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Write out the target point information for the racetrack
