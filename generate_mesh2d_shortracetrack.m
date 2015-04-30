@@ -95,7 +95,7 @@ fprintf(vertex_fid, '%d\n', Nstraight);
 for i=1:ceil(Nstraight/2),
     ytop = centery-R2;
     xtop = -Lt/2+(i-1)*ds;
-    plot(xtop,ytop,'r-+')
+    plot(xtop,ytop,'r-')
     fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
 end
 
@@ -103,76 +103,7 @@ end
 for i=ceil(Nstraight/2)+1:Nstraight,
     ybot = centery-R1;
     xbot = -Lt/2+(i-ceil(Nstraight/2)-1)*ds;
-    plot(xbot,ybot,'r-+')
-    fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
-end
-fclose(vertex_fid);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% actuator part
-% Write out the vertex information
-
-% %top part
-% vertex_fid = fopen(['actuator_top_' num2str(N) '.vertex'], 'w');
-% fprintf(vertex_fid, '%d\n', NLa);
-% 
-% for i=Na1:Na2,
-%     ytop = centery-R2;
-%     xtop = -Lt/2+i*ds;
-%     plot(xtop,ytop,'k*')
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
-% end
-% fclose(vertex_fid);
-% 
-% %bottom part
-% vertex_fid = fopen(['actuator_bot_' num2str(N) '.vertex'], 'w');
-% fprintf(vertex_fid, '%d\n', NLa);
-% 
-% for i=Na1:Na2,
-%     ybot = centery-R1;
-%     xbot = -Lt/2+i*ds;
-%     plot(xbot,ybot,'k*')
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
-% end
-% fclose(vertex_fid);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NO race track part
-% Write out the vertex information
-
-vertex_fid = fopen([mesh_name 'race_' num2str(N) '.vertex'], 'w');
-fprintf(vertex_fid, '%d\n', Nrace);
-
-%right curved part of NO racetrack
-for i=1:ceil(Nrace/4),
-    ytop = centery-R2;
-    xtop = Lt/2+i*ds;
-    plot(xtop,ytop,'b-')
-    fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
-end
-
-for i=1:ceil(Nrace/4),
-    ybot = centery-R1;
-    xbot = Lt/2+i*ds;
-    plot(xbot,ybot,'b-')
-    fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
-end
-
-
-%left curved part of MO racetrack
-for i=1:ceil(Nrace/4),
-    ytop = centery-R2;
-    xtop = -Lt/2-i*ds;
-    plot(xtop,ytop,'b-')
-    fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
-end
-
-for i=1:ceil(Nrace/4),
-    ybot = centery-R1;
-    xbot = -Lt/2-i*ds;
-    plot(xbot,ybot,'b-')
+    plot(xbot,ybot,'r-')
     fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
 end
 fclose(vertex_fid);
@@ -190,11 +121,11 @@ for i=0:Nmarkersx-1,
     for j=0:Nmarkersy-1,
         y = centery-R2-j*dmy;
         x = -Let/2+i*dmx;
+        plot(x,y,'k.')
     fprintf(vertex_fid, '%1.16e %1.16e\n', x, y);
-    plot(x,y)
     end
 end
-fclose(vertex_fid);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -208,6 +139,7 @@ fprintf(vertex_fid, '%d\n', NLap);
 for i=Na1p:Na2p,
     ytop = centery-R2;
     xtop = -Lt/2+i*ds;
+    plot(xtop,ytop,'m*')
     fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
 end
 fclose(vertex_fid);
@@ -219,56 +151,53 @@ fprintf(vertex_fid, '%d\n', NLap);
 for i=Na1p:Na2p,
     ybot = centery-R1;
     xbot = -Lt/2+i*ds;
+    plot(xbot,ybot,'m*')
     fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
 end
 fclose(vertex_fid);
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Pericardium
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NO race track part
 % Write out the vertex information
-% 
-% vertex_fid = fopen([mesh_name 'peri_' num2str(N) '.vertex'], 'w');
-% fprintf(vertex_fid, '%d\n', Nperitot);
-% 
-% % make the top and bottom of the pericardium
-% for i=1:ceil(Nstraight/2),
-%     ytop = centery-(R2-(Dp-diameter)/2);
-%     xtop = -Lt/2+(i-1)*ds;
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
-% end
-% 
-% for i=ceil(Nstraight/2)+1:Nstraight,
-%     ybot = centery-R1-(Dp-diameter)/2;
-%     xbot = -Lt/2+(i-ceil(Nstraight/2)-1)*ds;
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
-% end
-% 
-% % make the four side pieces
-% for i=Nstraight+1:Nstraight+ceil(Nperi/4),
-%     y = centery-(R1+(Dp-diameter)/2)+(i-Nstraight-1)*ds;
-%     x = -Lt/2;
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', x, y);
-% end
-% 
-% for i=Nstraight+ceil(Nperi/4)+1:Nstraight+ceil(Nperi/2),
-%     y = centery-R2+(i-Nstraight-ceil(Nperi/4)-1)*ds;
-%     x = -Lt/2;
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', x, y);
-% end
-% 
-% for i=Nstraight+ceil(Nperi/2)+1:Nstraight+ceil(3*Nperi/4),
-%     y = centery-(R1+(Dp-diameter)/2)+(i-Nstraight-ceil(Nperi/2)-1)*ds;
-%     x = Lt/2;
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', x, y);
-% end
-% 
-% for i=Nstraight+ceil(3*Nperi/4)+1:Nperitot,
-%     y = centery-R2+(i-Nstraight-ceil(3*Nperi/4)-1)*ds;
-%     x = Lt/2;
-%     fprintf(vertex_fid, '%1.16e %1.16e\n', x, y);
-% end
-% fclose(vertex_fid);
+
+vertex_fid = fopen([mesh_name 'norace_' num2str(N) '.vertex'], 'w');
+fprintf(vertex_fid, '%d\n', Nrace);
+
+%right part of NO racetrack
+for i=1:ceil(Nrace/4),
+    ytop = centery-R2;
+    xtop = Lt/2+i*ds;
+    plot(xtop,ytop,'b-')
+    fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
+end
+
+for i=1:ceil(Nrace/4),
+    ybot = centery-R1;
+    xbot = Lt/2+i*ds;
+    plot(xbot,ybot,'b-')
+    fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
+end
+
+
+%left part of NO racetrack
+for i=1:ceil(Nrace/4),
+    ytop = centery-R2;
+    xtop = -Lt/2-i*ds;
+    plot(xtop,ytop,'b-')
+    fprintf(vertex_fid, '%1.16e %1.16e\n', xtop, ytop);
+end
+
+for i=1:ceil(Nrace/4),
+    ybot = centery-R1;
+    xbot = -Lt/2-i*ds;
+    plot(xbot,ybot,'b-')
+    fprintf(vertex_fid, '%1.16e %1.16e\n', xbot, ybot);
+end
+fclose(vertex_fid);
+
+
 
 
 hold off
@@ -338,52 +267,29 @@ fclose(target_fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Write out the target point information for the actuator
 
-%top actuator
-% target_fid = fopen(['actuator_top_' num2str(N) '.target'], 'w');
-% fprintf(target_fid, '%d\n', NLa);
-% 
-% for i = 0:NLa-1,
-%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-% end
-% 
-% fclose(target_fid);
-% 
-% %bottom actuator
-% target_fid = fopen(['actuator_bot_' num2str(N) '.target'], 'w');
-% fprintf(target_fid, '%d\n', NLa);
-% 
-% for i = 0:NLa-1,
-%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-% end
-% 
-% fclose(target_fid);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Write out the target point information for the actuator
-%
 %top prescribed peristalsis
-% target_fid = fopen(['pperi_top_' num2str(N) '.target'], 'w');
-% fprintf(target_fid, '%d\n', NLap);
-% 
-% for i = 0:NLap-1,
-%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-% end
-% 
-% fclose(target_fid);
-% 
-% %bottom prescribed peristalsis
-% target_fid = fopen(['pperi_bot_' num2str(N) '.target'], 'w');
-% fprintf(target_fid, '%d\n', NLap);
-% 
-% for i = 0:NLap-1,
-%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-% end
-% 
-% fclose(target_fid);
+target_fid = fopen(['pperi_top_' num2str(N) '.target'], 'w');
+fprintf(target_fid, '%d\n', NLap);
+
+for i = 0:NLap-1,
+    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+end
+
+fclose(target_fid);
+
+%bottom prescribed peristalsis
+target_fid = fopen(['pperi_bot_' num2str(N) '.target'], 'w');
+fprintf(target_fid, '%d\n', NLap);
+
+for i = 0:NLap-1,
+    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+end
+
+fclose(target_fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Write out the target point information for the racetrack
-target_fid = fopen([mesh_name 'race_' num2str(N) '.target'], 'w');
+target_fid = fopen([mesh_name 'norace_' num2str(N) '.target'], 'w');
 
 fprintf(target_fid, '%d\n', Nrace);
 
@@ -392,17 +298,3 @@ for i = 0:Nrace-1,
 end
 
 fclose(target_fid);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Write out the target point information for the pericardium
-% target_fid = fopen([mesh_name 'peri_' num2str(N) '.target'], 'w');
-% 
-% fprintf(target_fid, '%d\n', Nperitot);
-% 
-% for i = 0:Nperitot-1,
-%     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-% end
-% 
-% fclose(target_fid);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
