@@ -37,7 +37,7 @@ OUTPUT_U            = TRUE                //
 OUTPUT_P            = TRUE                //
 OUTPUT_F            = FALSE                //
 OUTPUT_OMEGA        = TRUE                //
-OUTPUT_DIV_U        = TRUE                //
+OUTPUT_DIV_U        = FALSE                //
 ENABLE_LOGGING      = TRUE                //
 //
 CartesianGeometry {                //
