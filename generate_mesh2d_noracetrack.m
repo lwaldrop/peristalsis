@@ -19,7 +19,7 @@ diameter = 0.1;                     % diameter of the tube
 R2 = 0.1;                           % radius of inner wall
 R1 = R2+diameter;                   % radius of outer wall
 
-Nstraight = 2*ceil(Lt/ds);          % number of points along each straight section
+Nstraight = 2*ceil(Let/ds)          % number of points along each straight section
 %Ncurve = 2*ceil(pi*R1/ds);          % number of points along each curved section
 Nrace = 4*ceil(Llong/ds);         % number of points making up the racetrack part
 %Nrace = Nstraight+2*Ncurve;         % number of points making up the racetrack part
@@ -92,7 +92,7 @@ vertex_fid = fopen([mesh_name 'tube_' num2str(N) '.vertex'], 'w');
 fprintf(vertex_fid, '%d\n', Nstraight);
 
 %top part
-for i=1:ceil(Nstraight/2),
+for i=0:ceil(Nstraight/2-1),
     ytop = centery-R2;
     xtop = -Lt/2+(i-1)*ds;
     plot(xtop,ytop,'r-')
@@ -100,7 +100,7 @@ for i=1:ceil(Nstraight/2),
 end
 
 %bottom part
-for i=ceil(Nstraight/2)+1:Nstraight,
+for i=ceil(Nstraight/2):Nstraight-1,
     ybot = centery-R1;
     xbot = -Lt/2+(i-ceil(Nstraight/2)-1)*ds;
     plot(xbot,ybot,'r-')
@@ -244,21 +244,14 @@ fclose(beam_fid);
 % Write out the target point information for the ends of the elastic tube
 target_fid = fopen([mesh_name 'tube_' num2str(N) '.target'], 'w');
 
-fprintf(target_fid, '%d\n', 4*Nend);
+fprintf(target_fid, '%d\n', Nstraight);
 
-for i = 0:Nend-1,
+for i = 0:(Nstraight/2)-1,
     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
 end
 
-for i = ceil(Nstraight/2)-Nend:ceil(Nstraight/2)-1,
-    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-end
 
-for i = ceil(Nstraight/2):ceil(Nstraight/2)+Nend-1,
-    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
-end
-
-for i = Nstraight-Nend:Nstraight-1,
+for i = (Nstraight/2):(Nstraight-1),
     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
 end
 
