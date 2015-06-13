@@ -1,23 +1,25 @@
 # Clears any previous data
 rm(list=ls())
 
-# Sets working directory
-setwd("/Volumes/LaCie_New/IBAMR/peristalsis_Wo1/shortracetrack/short_JFreq0.25/graphs")
 
-# Displays the current working directory.
-getwd()
-
-s1<- "short_JFreq0.25"
-freq<-c(0.25)
+s1<- "short_RFreq1.9"
+freq<-c(1.9)
 num <-ceiling(10*freq)
 dia<-(0.1)
 rho <- 1000.0 #kg/m^3, 
 #Pressure is non-dimensinalized by dividing by rho*(dia*freq), where freq = 1 Hz.
 #Speed is non-dimensionalized by dividing by dia and multiplying by freq (=1)
 
-#### NOTE: In the Wo=1 set of simulations, the data analysis was turnicated so that many of the variables in this script (originally written for the Wo=10 sereis of simulations) were not analyzed because we anticipate not using them. These lines are commented out in case they will be used in the future! ####
-
 ###### LOADS EVERYTHING ######
+
+
+# Sets working directory
+dirname<-paste("/Volumes/LaCie_New/IBAMR/peristalsis_Wo1/shortracetrack/",s1,"/graphs/",sep="")
+setwd(dirname)
+
+# Displays the current working directory.
+getwd()
+
 
 ### Vena Cava ###
 place<-"vc"
@@ -136,7 +138,7 @@ lines(datavc.x,datavc.y,type="o",lty=0,col="red",pch=21)
 
 #Makes a basic line plot of the data in the VisIt curve file.
 plot(V3~V1,data=dataaortamax,type="l",col="red",
-xlab=list("Time",cex=1),ylab=list(var2,cex=1))
+xlab=list("Time",cex=1),ylab=list(var2,cex=1),ylim=c(0,max(dataaortamax$V3)))
 
 g2<-identify(x=dataaortamax$V1,y=dataaortamax$V3,pos=FALSE,n=num)
 
