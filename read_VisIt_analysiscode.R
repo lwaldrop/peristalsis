@@ -2,8 +2,8 @@
 rm(list=ls())
 
 
-s1<- "short_RFreq1.9"
-freq<-c(1.9)
+s1<- "short_JFreq1.75"
+freq<-c(1.75)
 num <-ceiling(10*freq)
 dia<-(0.1)
 rho <- 1000.0 #kg/m^3, 
@@ -218,9 +218,11 @@ dev.off()
 
 mean(datavcavg$V3) 	# average speed Vena Cava
 mean(datavcmax$V3)	# average max speed Vena Cava
+max(datavcmax$V3)
 mean(datavc.y) 	# Mean peak speeds, Vena Cava
 mean(dataaortaavg$V3) 	# average speed Aorta
 mean(dataaortamax$V3)	# average max speed Aorta
+max(dataaortamax$V3)
 mean(dataaorta.y) 	# Mean peak speeds, Aorta
 mean(datapointUm$V3)	# point.Um
 mean(datapointUx$V3)	# point.Ux

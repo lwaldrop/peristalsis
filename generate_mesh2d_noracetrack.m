@@ -244,18 +244,26 @@ fclose(beam_fid);
 % Write out the target point information for the ends of the elastic tube
 target_fid = fopen([mesh_name 'tube_' num2str(N) '.target'], 'w');
 
-fprintf(target_fid, '%d\n', Nstraight);
+fprintf(target_fid, '%d\n', 4*Nend);
 
-for i = 0:(Nstraight/2)-1,
+for i = 0:Nend-1,
     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
 end
 
+for i = ceil(Nstraight/2)-Nend:ceil(Nstraight/2)-1,
+    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+end
 
-for i = (Nstraight/2):(Nstraight-1),
+for i = ceil(Nstraight/2):ceil(Nstraight/2)+Nend-1,
+    fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
+end
+
+for i = Nstraight-Nend:Nstraight-1,
     fprintf(target_fid, '%d %1.16e\n', i, kappa_target*ds/(ds^2));
 end
 
 fclose(target_fid);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Write out the target point information for the actuator
