@@ -19,7 +19,7 @@ diameter = 0.1;                     % diameter of the tube
 R2 = 0.1;                           % radius of inner wall
 R1 = R2+diameter;                   % radius of outer wall
 
-Nstraight = 2*ceil(Let/ds)          % number of points along each straight section
+Nstraight = 2*ceil(Lt/ds)          % number of points along each straight section
 %Ncurve = 2*ceil(pi*R1/ds);          % number of points along each curved section
 Nrace = 4*ceil(Llong/ds);         % number of points making up the racetrack part
 %Nrace = Nstraight+2*Ncurve;         % number of points making up the racetrack part

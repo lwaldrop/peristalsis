@@ -2,8 +2,8 @@
 rm(list=ls())
 
 
-s1<- "short_JFreq1.75"
-freq<-c(1.75)
+s1<- "short_JFreq2.0"
+freq<-c(2.0)
 num <-ceiling(10*freq)
 dia<-(0.1)
 rho <- 1000.0 #kg/m^3, 
