@@ -72,8 +72,8 @@ dmy = diameter/(Nmarkersy-1);       %space between markers in y-direction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % material parameters
-kappa_spring = 100;               % spring constant (Newton)
-kappa_beam = 1.0;                 % beam stiffness constant (Newton m^2)
+kappa_spring = 2;               % spring constant (Newton)
+kappa_beam = 0.5;                 % beam stiffness constant (Newton m^2)
 kappa_target = kappa_spring;        % target point penalty spring constant (Newton)
 
 
