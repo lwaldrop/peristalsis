@@ -103,9 +103,6 @@ IBStandardInitializer {                //
    heart_tube_512 {                //
       level_number = MAX_LEVELS - 1                //
    } //
-   heart_race_512 {                //
-      level_number = MAX_LEVELS - 1                //
-   } //
    markers_512 {                //
       level_number = MAX_LEVELS - 1                //
    } //
